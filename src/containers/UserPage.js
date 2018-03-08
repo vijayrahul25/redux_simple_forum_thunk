@@ -8,27 +8,32 @@ class UserPage extends Component {
     this.onClick = this.onClick.bind(this);
   }
 
-  getUserFromState(id) {
-    return this.props.users[this.props.match.params.id];
+  getUserFromState(userId) {    
+    if (this.props.users) {
+      const user = this.props.users.filter(user => user.id == userId);
+      return user[0];
+    }
+    return null;
   }
   onClick() {
     this.props.history.goBack();
   }
 
   render() {
-    let user = this.props.users[this.props.match.params.id];
+    
+    let user = this.getUserFromState(this.props.match.params.id);
     let userDisplay = null;
-
+    //let user = null;
     if (user) {
       userDisplay = (
         <div>
           <div className="row">
             <div className="col">First Name: </div>
-            <div className="col">{user.firstname}</div>
+            <div className="col">{user.firstName}</div>
           </div>
           <div className="row">
             <div className="col">Last Name: </div>
-            <div className="col">{user.lastname}</div>
+            <div className="col">{user.lastName}</div>
           </div>
         </div>
       );
@@ -48,9 +53,9 @@ class UserPage extends Component {
     );
   }
 }
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
-    users: state.userReducer.users
+    users: state.userReducer
   };
 }
 

@@ -12,7 +12,7 @@ import thunk from "redux-thunk";
 //const store = createStore(reducer, applyMiddleware(createLogger));
 
 const store = createStore(reducer, applyMiddleware(thunk));
-//store.dispatch(loadUsers());
+store.dispatch(loadUsers());
 render(
   <BrowserRouter>
     <Provider store={store}>

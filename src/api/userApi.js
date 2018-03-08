@@ -1,7 +1,7 @@
 // This file mocks a web API by working with the hard-coded data below.
 // It uses setTimeout to simulate the delay of an AJAX call.
 // All calls return promises.
-const delay = 0;
+const delay = 1000;
 const users = [
   {
     id: "cory-house",
@@ -40,13 +40,17 @@ class userApi {
         // Simulate server-side validation
         const minuserNameLength = 3;
         if (user.firstName.length < minuserNameLength) {
-          reject(
-            `First Name must be at least ${minuserNameLength} characters.`
-          );
+          reject({
+            type: "user_error",
+            message: `First Name must be at least ${minuserNameLength} characters.`
+          });
         }
 
         if (user.lastName.length < minuserNameLength) {
-          reject(`Last Name must be at least ${minuserNameLength} characters.`);
+          reject({
+            type: "user_error",
+            message: `Last Name must be at least ${minuserNameLength} characters.`
+          });
         }
 
         if (user.id) {
@@ -60,7 +64,7 @@ class userApi {
           users.push(user);
         }
 
-        resolve(Object.assign({}, user));
+        resolve(Object.assign([], user));
       }, delay);
     });
   }
